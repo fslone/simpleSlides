@@ -19,8 +19,9 @@
         <style>
         
         #simpleslides { position: relative; width: 500px; height: 500px; }
-        #simpleslides img:first-child { z-index: 1; }
-        #simpleslides img { position: absolute; top: 0px; left: 0px; z-index: 0; }
+        #simpleslides img:first-child { z-index: 1; display: block; }
+        #simpleslides img { position: absolute; top: 0px; left: 0px; z-index: 0; display: none; }
+
         #simpleslides ul { position: absolute; z-index: 9999; bottom: 0px; padding: 0px; margin: 0px; text-align: center; width: 500px; }
         #simpleslides ul li { padding: 3px; border: 3px solid #000000; border-radius: 100px; display: inline-block; height: 10px; width: 10px; margin: 10px; }
         #simpleslides ul li a.activeSlide { background-color: #000; display: block; height: 10px; border-radius: 100px; }

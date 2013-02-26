@@ -17,22 +17,22 @@ Written by Sethen Maleno
 			this.images = $(obj).find("img");
 			this.imagesLength = this.images.length;
 
-			//run a for loop for all images
-			for(var i = 0, z = 9999; i < this.imagesLength; i++, z--) {
-
-				$(this.images[i]).css({ "z-index" : z });
-
-			}
-
 		},
 
-		startSlideShow: function(images, current, slideShowSpeed) {
+		startSlideShow: function(images, current, slideShowSpeed, generateButtons) {
 
 			var self = this;
 			var firstImage = images[0];
+			var lastImage = images[this.imagesLength - 1];
 			var next = $(current).next();
 			var currentIndex = $(current).index();
 			var slideButtons = $(self.imageContainer).find(".slideButtons ul li a");
+
+			if(generateButtons) {
+
+				this.generateButtons();
+
+			}
 
 			$(slideButtons).removeClass("activeSlide");
 			$(slideButtons[currentIndex]).addClass("activeSlide");
@@ -41,19 +41,28 @@ Written by Sethen Maleno
 
 				if(next.length == 0 || next.hasClass("slideButtons")) {
 
+					$(current).css({ "z-index" : 0 });
+					$(firstImage).css({ "z-index" : 1 }).fadeIn("slow", function() {
+
+						$(lastImage).hide();
+
+					})
+
 					current = firstImage;
-					
-					$(current).fadeIn("slow", function() {
-						
-						$(images).show();
-					
-					});
+
 
 				} else {
 
-					$(current).fadeOut("slow");
-					current = next;
+					$(current).css({ "z-index" : 0 });
 
+					next.fadeIn("slow", function() {
+
+						$(current).prev().hide();
+
+					});
+
+					current = next;
+					
 				}
 
 				self.startSlideShow(images, current, slideShowSpeed);
@@ -76,7 +85,8 @@ Written by Sethen Maleno
 
 				mouseleave: function() {
 
-					var shownImage = $(self.imageContainer).find("img:visible")[0];
+					var shownImage = $(self.imageContainer).find("img:visible");
+
 					methods.startSlideShow(self.images, shownImage, slideShowSpeed);
 
 				}
@@ -111,7 +121,7 @@ Written by Sethen Maleno
 		var settings = $.extend({
 			"generateButtons" : true,
 			"stop" : true,
-			"slideShowSpeed" : 1000,
+			"slideShowSpeed" : 2000,
 		}, options);
 
 		methods.init(this);
@@ -125,9 +135,10 @@ Written by Sethen Maleno
 
 			}
 
-			methods.startSlideShow(methods.images, methods.images[0], settings["slideShowSpeed"]);
+			methods.startSlideShow(methods.images, methods.images[0], settings["slideShowSpeed"], settings["generateButtons"]);
 		
 		}
+
 
 		if(settings["stop"]) {
 
@@ -135,10 +146,8 @@ Written by Sethen Maleno
 			
 		}
 
-		if(settings["generateButtons"]) {
 
-			methods.generateButtons();
-		}
+
 	}
 
 }(jQuery));
