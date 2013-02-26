@@ -112,6 +112,43 @@ Written by Sethen Maleno
 				}
 			}
 
+		},
+
+		slideLinks: function() {
+
+			var self = this;
+
+			$(".slideButtons ul").on("click", "li", function() {
+
+				var slideButtons = $(self.imageContainer).find(".slideButtons ul li a");
+				var slideButtonIndex = $(this).index();
+				var shownImage = $(self.imageContainer).find("img:visible");
+				var targetImage = self.images[slideButtonIndex];
+
+				if($(shownImage).attr("src") == $(targetImage).attr("src") || $(targetImage).is(":animated")) {
+					
+					return false;
+
+				} else {
+
+
+
+					$(targetImage).css({ "z-index" : 1 });
+					$(shownImage).css({ "z-index" : 0 });
+					$(targetImage).fadeIn("fast", function() {
+						
+						$(shownImage).hide();
+
+						$(slideButtons).removeClass("activeSlide");
+						$(slideButtons[slideButtonIndex]).addClass("activeSlide");
+
+					
+					});
+
+				}
+
+			});
+
 		}
 
 	}
@@ -119,34 +156,45 @@ Written by Sethen Maleno
 	$.fn.simpleSlides = function(options) {
 
 		var settings = $.extend({
+			"autoPlay" : true,
 			"generateButtons" : true,
 			"stop" : true,
+			"slideLinks" : true,
 			"slideShowSpeed" : 2000,
 		}, options);
 
+		
 		methods.init(this);
 
+		if(settings["autoPlay"] && settings["generateButtons"]) {
 
-		if(settings["slideShowSpeed"]) {
-		
-			if(settings["slideShowSpeed"] < 1000) {
+			if(settings["slideShowSpeed"] && settings["slideShowSpeed"] < 1000) {
 
 				settings["slideShowSpeed"] = 1000;
 
 			}
 
 			methods.startSlideShow(methods.images, methods.images[0], settings["slideShowSpeed"], settings["generateButtons"]);
-		
+	
+
+		} else {
+
+			methods.startSlideShow(methods.images, methods.images[0], settings["slideShowSpeed"]);
+
 		}
 
-
+	
 		if(settings["stop"]) {
 
 			methods.stopSlideshow(settings["slideShowSpeed"]);
 			
 		}
 
+		if(settings["slideLinks"]) {
+		
+			methods.slideLinks();
 
+		}
 
 	}
 
