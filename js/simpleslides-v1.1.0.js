@@ -4,7 +4,7 @@
  * @author Sethen Maleno (Original)
  * @author Fleming Slone (edited 3.31.13)
  * @version Simple Slides 1.1.0
- * @requires jQuery 1.4+
+ * @requires jQuery 1.7+
  *
  */
 (function ($) {
@@ -23,8 +23,7 @@
                 next = $(current).next(),
                 currentIndex = $(current).index(),
                 slideButtons = $(self.imageContainer).find(".slideButtons ul li a");
-            if (generateButtons) 
-                this.generateButtons(); 
+            if (generateButtons) { this.generateButtons(); }
             $(slideButtons)
                 .removeClass("activeSlide")
                 .slice(currentIndex, currentIndex + 1)
@@ -44,9 +43,9 @@
                     $(current)
                         .css("zIndex", "0");
                     next.fadeIn("slow", function () {
-                       $(current)
-                           .prev()
-                           .hide();
+                        $(current)
+                            .prev()
+                            .hide();
                     });
                     current = next;
                 }
@@ -59,7 +58,7 @@
                 shownImage;
             $(this.imageContainer)
                 .hover(function () {clearTimeout(methods.runSlideshow); },
-                       function () {shownImage = $(self.imageContainer).find("img:visible");methods.startSlideShow(self.images, shownImage, slideShowSpeed); });
+                       function () {shownImage = $(self.imageContainer).find("img:visible"); methods.startSlideShow(self.images, shownImage, slideShowSpeed); });
         },
         generateButtons: function () {
             var i,
@@ -72,7 +71,7 @@
             }
         },
         slideLinks: function () {
-            var self = this;   
+            var self = this;
             $(".slideButtons ul")
                 .on("click", "li", function () {
                     var slideButtons = $(self.imageContainer).find(".slideButtons ul li a"),
