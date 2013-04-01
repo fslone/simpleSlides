@@ -1,34 +1,63 @@
 /**
- * A very simple jQuery plugin for slideshows
- *
+ * 
+ * @fileOverview A very simple jQuery plugin for slideshows
  * @author Sethen Maleno (Original)
- * @author Fleming Slone (edited 3.31.13)
- * @version Simple Slides 1.1.0
+ * @author Fleming Slone
  * @requires jQuery 1.7+
+ * @see http://www.jquery.com/
+ * @version 1.0.1
+ * @since 4.1.13
  *
  */
+
 (function ($) {
+
     "use strict";
+
+    /** @namespace */
     var methods = {
-        runSlideshow: '',
+        /**
+        *
+        * @param {object} obj
+        * @return {undefined}
+        *
+        */
+
         init: function (obj) {
             this.imageContainer = obj;
             this.images = $(obj).find("img");
             this.imagesLength = this.images.length;
+            this.runSlideshow = '';
+            this.imgCont = $(this.imageContainer);
         },
+
+        /**
+        *
+        * Accepts an array of images, which image to begin the slideshow with, 
+        * what interval the autorate transitions should take place at, and creates 
+        * navigation buttons for the slideshow as needed
+        *
+        * @param {array} images
+        * @param {string} current
+        * @param {number} slideShowSpeed
+        * @param {boolean} generateButtons
+        * @return {undefined}
+        *
+        */
+
         startSlideShow: function (images, current, slideShowSpeed, generateButtons) {
             var self = this,
                 firstImage = images[0],
                 lastImage = images[this.imagesLength - 1],
                 next = $(current).next(),
                 currentIndex = $(current).index(),
-                slideButtons = $(self.imageContainer).find(".slideButtons ul li a");
+                slideButtons = self.imgCont.find(".slideButtons ul li a");
             if (generateButtons) { this.generateButtons(); }
             $(slideButtons)
                 .removeClass("activeSlide")
                 .slice(currentIndex, currentIndex + 1)
                 .addClass("activeSlide");
-            methods.runSlideshow = setTimeout(function () {
+            this.runSlideshow = setTimeout(function () {
                 if (next.length === 0 || next.hasClass("slideButtons")) {
                     $(current)
                         .css("zIndex", "0");
@@ -53,30 +82,60 @@
             }, slideShowSpeed);
 
         },
+
+        /**
+        * 
+        * Stops the slide transitions on mouseenter, resumes in the same 
+        * gallery picture location on mouseleave
+        * @param {number} slideShowSpeed
+        * @return {undefined}
+        *
+        */
+
         stopSlideshow: function (slideShowSpeed) {
             var self = this,
                 shownImage;
-            $(this.imageContainer)
-                .hover(function () {clearTimeout(methods.runSlideshow); },
-                       function () {shownImage = $(self.imageContainer).find("img:visible"); methods.startSlideShow(self.images, shownImage, slideShowSpeed); });
+            this.imgCont
+                .hover(function () {clearTimeout(self.runSlideshow); },
+                       function () {shownImage = self.imgCont.find("img:visible"); methods.startSlideShow(self.images, shownImage, slideShowSpeed); });
         },
+
+        /**
+        *
+        * Creates buttons to navigate the slideshow if 
+        * specified
+        * @param {undefined}
+        * @return {undefined}
+        *
+        */
+
         generateButtons: function () {
             var i,
                 ulAppend;
-            $(this.imageContainer).append("<div class='slideButtons'><ul></ul></div>");
+            this.imgCont
+                .append("<div class='slideButtons'><ul></ul></div>");
             for (i = 0; i < this.imagesLength; i += 1) {
                 ulAppend = (i === 0) ? "<li><a class='activeSlide' href='javascript:;'></a></li>" : "<li><a href='javascript:;'></a></li>";
                 $(".slideButtons ul")
                     .append(ulAppend);
             }
         },
+
+        /**
+        *
+        * Swaps out the buttons being selected/unselected based on click events
+        * @param {undefined}
+        * @return {undefined}
+        *
+        */
+
         slideLinks: function () {
             var self = this;
             $(".slideButtons ul")
                 .on("click", "li", function () {
-                    var slideButtons = $(self.imageContainer).find(".slideButtons ul li a"),
+                    var slideButtons = self.imgCont.find(".slideButtons ul li a"),
                         slideButtonIndex = $(this).index(),
-                        shownImage = $(self.imageContainer).find("img:visible"),
+                        shownImage = self.imgCont.find("img:visible"),
                         targetImage = self.images[slideButtonIndex],
                         shownImageSRC = $(shownImage).attr("src"),
                         targetImageSRC = $(targetImage).attr("src");
@@ -96,7 +155,34 @@
                 });
         }
     };
+
+    /**
+    *
+    * @see http://www.jquery.com/
+    * @name $
+    * @class
+    *
+    */
+
+    /**
+    *
+    * @see http://www.jquery.com/
+    * @name fn
+    * @class
+    * @memberOf $
+    *
+    */
+
+    /**
+    *
+    * simpleSlides plugin
+    * @class
+    * @memberOf $.fn
+    *
+    */
+
     $.fn.simpleSlides = function (options) {
+        /** @namespace */
         var settings = $.extend({
                 "autoPlay": true,
                 "generateButtons": true,
@@ -116,6 +202,5 @@
         if (stop) {methods.stopSlideshow(slideShowSpeed); }
         if (slideLinks) {methods.slideLinks(); }
     };
-    //Call the plugin
     $("#simpleslides").simpleSlides();
-}(jQuery));
+}(window.jQuery));
