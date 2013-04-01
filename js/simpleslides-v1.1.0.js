@@ -114,10 +114,8 @@
         methods.init(this);
         slideShowSpeed = (slideShowSpeed < 1000) ? 1000 : slideShowSpeed;
         startSlideshow = (autoPlay && generateButtons) ? methods.startSlideShow(methods.images, methods.images[0], slideShowSpeed, generateButtons) : methods.startSlideShow(methods.images, methods.images[0], slideShowSpeed);
-        if (stop)
-            methods.stopSlideshow(slideShowSpeed);
-        if (slideLinks) 
-            methods.slideLinks();
+        if (stop) {methods.stopSlideshow(slideShowSpeed); }
+        if (slideLinks) {methods.slideLinks(); }
     };
     //Call the plugin
     $("#simpleslides").simpleSlides();
