@@ -1,5 +1,4 @@
 /**
- * 
  * @fileOverview A very simple jQuery plugin for slideshows
  * @author Sethen Maleno (Original)
  * @author Fleming Slone
@@ -7,20 +6,19 @@
  * @see http://www.jquery.com/
  * @version 1.0.1
  * @since 4.2.13
- *
  */
 
 ;(function ($) {
 
     "use strict";
 
-    /** @namespace methods */
+/** @namespace methods */
     var methods = {
         
-        /**
-        * @public
-        * @function methods.init
-        * @param {object} obj
+/**
+* @public
+* @function methods.init
+* @param {object} obj
         * 
         *
         */
@@ -34,7 +32,6 @@
         },
 
         /**
-        *
         * Accepts an array of images, which image to begin the slideshow with, 
         * what interval the autorate transitions should take place at, and creates 
         * navigation buttons for the slideshow as needed
@@ -44,8 +41,6 @@
         * @param {string} current
         * @param {number} slideShowSpeed
         * @param {boolean} generateButtons
-        * 
-        *
         */
 
         startSlideShow: function (images, current, slideShowSpeed, generateButtons) {
@@ -86,16 +81,12 @@
         },
 
         /**
-        * 
         * Stops the slide transitions on mouseenter, resumes in the same 
         * gallery picture location on mouseleave
         * @public
         * @function methods.stopSlideshow
         * @param {number} slideShowSpeed
-        * 
-        *
         */
-
         stopSlideshow: function (slideShowSpeed) {
             var self = this,
                 shownImage;
@@ -105,14 +96,11 @@
         },
 
         /**
-        *
         * Creates buttons to navigate the slideshow if 
         * specified
         * @public
         * @function methods.generateButtons
-        *
         */
-
         generateButtons: function () {
             var i,
                 ulAppend;
@@ -127,13 +115,10 @@
         },
 
         /**
-        *
         * Swaps out the buttons being selected/unselected based on click events
         * @public
         * @function methods.slideLinks
-        *
         */
-
         slideLinks: function () {
             var self = this,
                 slideButtons = self.imgCont.find(".slideButtons ul li a"),
@@ -162,13 +147,11 @@
         },
         
         /** 
-        *
         * Experimental method 
-        * for minimizing the nav menu.
+        * for auto-hiding the nav menu.
         * Not fully tested.
         * @public
         * @function methods.minLinkMenu
-        *
         */
         minLinkMenu: function () {
                 var self = this;
@@ -193,7 +176,6 @@
     };
 
     /**
-    *
     * @see http://www.jquery.com/
     * @name $
     * @class
@@ -227,8 +209,10 @@
         
         //this is causing problems because buttons cant be created on slideshows 
         //not set to autoPlay. Split into two conditionals
-        if (settings.autoPlay ) {methods.startSlideshow(methods.images, methods.images[0], settings.slideShowSpeed);}
+        if (settings.autoPlay ) {methods.startSlideShow(methods.images, methods.images[0], settings.slideShowSpeed);}
         
+        if (settings.generateButtons)
+
         if (settings.stop) {methods.stopSlideshow(settings.slideShowSpeed); }
         
         if (settings.slideLinks) {methods.slideLinks(); }
