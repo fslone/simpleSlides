@@ -1,4 +1,4 @@
-Simple Slides 1.1
+Simple Slides 1.0.0
 ================
 
 A very simple jQuery plugin for slideshows.  This is a plugin that will be actively supported and have new features added from time to time.

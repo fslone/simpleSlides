@@ -3,7 +3,7 @@
  * @fileOverview A very simple jQuery plugin for slideshows
  * @author Sethen Maleno (Original)
  * @author Fleming Slone
- * @requires jQuery 1.7+
+ * @requires jQuery 1.9+
  * @see http://www.jquery.com/
  * @version 1.0.1
  * @since 4.1.13
