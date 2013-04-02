@@ -17,6 +17,7 @@
     /** @namespace methods */
     var methods = {
         /**
+        * @public
         * @function methods.init
         * @param {object} obj
         * 
@@ -108,7 +109,7 @@
         * Creates buttons to navigate the slideshow if 
         * specified
         * @public
-        * @function methods.generateButtons()
+        * @function methods.generateButtons
         *
         */
 
@@ -129,7 +130,7 @@
         *
         * Swaps out the buttons being selected/unselected based on click events
         * @public
-        * @function methods.slideLinks()
+        * @function methods.slideLinks
         *
         */
 
@@ -213,9 +214,9 @@
 
     $.fn.simpleSlides = function (options) {
         
-        /** @namespace */
+        /** @namespace settings */
         var settings = $.extend({
-                "autoPlay": true,
+                "autoPlay": false,
                 "generateButtons": true,
                 "stop": true,
                 "slideLinks": true,

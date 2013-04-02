@@ -1,6 +1,6 @@
 #Revisions, 1.0.1#
 
-HTML
+##HTML##
 ========================
 
 1.) `Normalize.css` was being called from `index.html` but the target file was not found in the directory. Removed the call.
@@ -15,7 +15,7 @@ HTML
 
 
 
-CSS
+##CSS##
 ========================
 
 5.) `border-radius` property definitions like for the buttons in `main.css` will not be supported in IE8- and Firefox3-. The `border-radius` property is also not supported by Opera and Opera Mobile in older versions, as well as the latest version of Opera Mini. 
@@ -30,7 +30,7 @@ CSS
 
 
 
-JS
+##JS##
 ========================
 
 8.) Ran through JS Beautifier to format, remove blank lines, convert tab indents to four space indents to reduce filesize
@@ -45,7 +45,7 @@ JS
 
     "use strict"; Tutorial: http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/
 
-11.) Combined variable declarations at the top of all functions to reduce unnecessary var statements and avoid hoisting issues. Declaring variables in this way avoids the conflicts associated with variable hoisting, in which a variable declaration lower in the function is still hoisted to the top of the function for initialization, being assigned a value of "undefined" until the variable assignment is reached lower in the function.       
+11.) Combined variable declarations at the top of all functions to reduce unnecessary var statements and avoid hoisting issues. Declaring variables up top avoids the conflicts associated with variable hoisting, where a variable declaration lower in the function is still hoisted to the top of the function for initialization, but is assigned a value of "undefined" until the variable assignment is reached lower in the function.       
 
     Hoisting Tutorial: http://net.tutsplus.com/tutorials/javascript-ajax/quick-tip-javascript-hoisting-explained/
 
@@ -53,15 +53,15 @@ JS
 
     Versioning Tutorial: http://semver.org/
 
-13.) Refined chaining of jQuery events. Rather than having multiple selectors and the associated drain on performance when looking up selectors repeatedly, jQuery handlers have been chained to avoid unnecessary DOM traversal operations.
+13.) Redid chaining and selector caching on some of the jQuery to see if it will give a performance boost.
 
-14.) Replaced equality operators with identity operators in function evaluations. Helps to speed performance by avoiding type conversions and value coercion if the values are of different types.
+14.) Replaced equality operators with identity operators in function evaluations. Helps to speed performance by avoiding type conversions and value coercion if the values are different types.
 
 15.) Removing auto-increment and auto-decrement operators, as these may be prone to unforeseen errors.
 
     Douglas Crockford Explains: http://www.youtube.com/watch?v=47Ceot8yqeI&t=69m0s
 
-20.) JS now passes JSLint scrutiny, note that you must predefine "jQuery" as a global variable and set "Assume a browser" to "true". 
+26.) JS now passes JSLint scrutiny, you have to define "jQuery" as a global variable and set "Assume a browser" to "true" for this to clear. 
 
     Site: http://www.jslint.com/
 
