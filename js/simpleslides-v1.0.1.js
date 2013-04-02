@@ -29,6 +29,7 @@
             this.imagesLength = this.images.length;
             this.runSlideshow = '';
             this.imgCont = $(this.imageContainer);
+            this.timeDelay = '';
         },
 
         /**
@@ -47,8 +48,8 @@
 
         startSlideShow: function (images, current, slideShowSpeed, generateButtons) {
             var self = this,
-                firstImage = images[0],
-                lastImage = images[this.imagesLength - 1],
+                firstImage = this.images[0],
+                lastImage = this.images[this.imagesLength - 1],
                 next = $(current).next(),
                 currentIndex = $(current).index(),
                 slideButtons = self.imgCont.find(".slideButtons ul li a");
@@ -80,7 +81,6 @@
                 }
                 self.startSlideShow(images, current, slideShowSpeed);
             }, slideShowSpeed);
-
         },
 
         /**
@@ -115,10 +115,11 @@
             this.imgCont
                 .append("<div class='slideButtons'><ul></ul></div>");
             for (i = 0; i < this.imagesLength; i += 1) {
-                ulAppend = (i === 0) ? "<li><a class='activeSlide' href='javascript:;'></a></li>" : "<li><a href='javascript:;'></a></li>";
+                ulAppend = (i === 0) ? "<li><a class='activeSlide'></a></li>" : "<li><a></a></li>";
                 $(".slideButtons ul")
                     .append(ulAppend);
             }
+            methods.minLinkMenu();
         },
 
         /**
@@ -130,7 +131,8 @@
         */
 
         slideLinks: function () {
-            var self = this;
+            var self = this,
+                fadeMenu = setTimeout
             $(".slideButtons ul")
                 .on("click", "li", function () {
                     var slideButtons = self.imgCont.find(".slideButtons ul li a"),
@@ -139,20 +141,44 @@
                         targetImage = self.images[slideButtonIndex],
                         shownImageSRC = $(shownImage).attr("src"),
                         targetImageSRC = $(targetImage).attr("src");
-                    if (shownImageSRC !== targetImageSRC || !$(targetImage).is(":animated")) {
+                    if (shownImageSRC !== targetImageSRC && !$(targetImage).is(":animated")) {
                         $(targetImage)
-                            .css("zIndex", "1")
-                            .fadeIn("fast", function () {
+                            .fadeIn("slow", function () {
                                 $(shownImage)
-                                    .css("zIndex", "0")
-                                    .hide();
+                                    .fadeOut("fast");
                                 $(slideButtons)
                                     .removeClass("activeSlide")
                                     .slice(slideButtonIndex, slideButtonIndex + 1)
                                     .addClass("activeSlide");
+
                             });
                     }
                 });
+
+        },
+
+        /** Experimental method 
+        * for minimizing the nav menu.
+        * Not fully tested.
+        */
+        minLinkMenu: function () {
+                var self = this;
+                this.timeDelay = setTimeout(
+                    function(){
+                        $(".slideButtons ul").slideUp(3000);
+                    }, 
+                6000
+                );
+                $(".slideButtons ul").hover(
+                    function() {
+                        clearTimeout(this.timeDelay);
+                        $(".slideButtons ul")
+                            .slideDown(); 
+                    },
+                    function() {
+                        methods.minLinkMenu(); 
+                    }
+                );
         }
     };
 
@@ -182,25 +208,22 @@
     */
 
     $.fn.simpleSlides = function (options) {
+        
         /** @namespace */
         var settings = $.extend({
                 "autoPlay": true,
                 "generateButtons": true,
                 "stop": true,
                 "slideLinks": true,
-                "slideShowSpeed": 2000
-            }, options),
-            autoPlay = settings.autoPlay,
-            generateButtons = settings.generateButtons,
-            slideShowSpeed = settings.slideShowSpeed,
-            stop = settings.stop,
-            slideLinks = settings.slideLinks,
-            startSlideshow;
+                "slideShowSpeed": 3000,
+                "minimizeButtons": true
+            }, options);
+            
         methods.init(this);
-        slideShowSpeed = (slideShowSpeed < 1000) ? 1000 : slideShowSpeed;
-        startSlideshow = (autoPlay && generateButtons) ? methods.startSlideShow(methods.images, methods.images[0], slideShowSpeed, generateButtons) : methods.startSlideShow(methods.images, methods.images[0], slideShowSpeed);
-        if (stop) {methods.stopSlideshow(slideShowSpeed); }
-        if (slideLinks) {methods.slideLinks(); }
+        settings.slideShowSpeed = (settings.slideShowSpeed < 1000) ? 1000 : settings.slideShowSpeed;
+        methods.startSlideshow = (settings.autoPlay && settings.generateButtons) ? methods.startSlideShow(methods.images, methods.images[0], settings.slideShowSpeed, methods.generateButtons) : methods.startSlideShow(methods.images, methods.images[0], settings.slideShowSpeed);
+        if (settings.stop) {methods.stopSlideshow(settings.slideShowSpeed); }
+        if (settings.slideLinks) {methods.slideLinks(); }
     };
     $("#simpleslides").simpleSlides();
-}(window.jQuery));
+}(jQuery));
