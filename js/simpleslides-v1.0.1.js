@@ -6,16 +6,17 @@
  * @requires jQuery 1.9+
  * @see http://www.jquery.com/
  * @version 1.0.1
- * @since 4.1.13
+ * @since 4.2.13
  *
  */
 
-(function ($) {
+;(function ($) {
 
     "use strict";
 
     /** @namespace methods */
     var methods = {
+        
         /**
         * @public
         * @function methods.init
@@ -23,7 +24,6 @@
         * 
         *
         */
-
         init: function (obj) {
             this.imageContainer = obj;
             this.images = $(obj).find("img");
@@ -136,31 +136,31 @@
 
         slideLinks: function () {
             var self = this,
-                fadeMenu = setTimeout
-            $(".slideButtons ul")
-                .on("click", "li", function () {
-                    var slideButtons = self.imgCont.find(".slideButtons ul li a"),
-                        slideButtonIndex = $(this).index(),
-                        shownImage = self.imgCont.find("img:visible"),
-                        targetImage = self.images[slideButtonIndex],
-                        shownImageSRC = $(shownImage).attr("src"),
-                        targetImageSRC = $(targetImage).attr("src");
-                    if (shownImageSRC !== targetImageSRC && !$(targetImage).is(":animated")) {
-                        $(targetImage)
-                            .fadeIn("slow", function () {
-                                $(shownImage)
-                                    .fadeOut("fast");
-                                $(slideButtons)
-                                    .removeClass("activeSlide")
-                                    .slice(slideButtonIndex, slideButtonIndex + 1)
-                                    .addClass("activeSlide");
+                slideButtons = self.imgCont.find(".slideButtons ul li a"),
+                slideButtonIndex = $(this).index(),
+                shownImage = self.imgCont.find("img:visible"),
+                targetImage = self.images[slideButtonIndex],
+                shownImageSRC = $(shownImage).attr("src"),
+                targetImageSRC = $(targetImage).attr("src");
+                
+                $(".slideButtons ul")
+                        .on("click", "li", function () {
+                            if (shownImageSRC !== targetImageSRC && !$(targetImage).is(":animated")) {
+                                $(targetImage)
+                                    .fadeIn("slow", function () {
+                                        $(shownImage)
+                                            .fadeOut("fast");
+                                        $(slideButtons)
+                                            .removeClass("activeSlide")
+                                            .slice(slideButtonIndex, slideButtonIndex + 1)
+                                            .addClass("activeSlide");
 
-                            });
-                    }
-                });
+                                    });
+                            }
+                        });
 
         },
-
+        
         /** 
         *
         * Experimental method 
@@ -198,18 +198,9 @@
     * @name $
     * @class
     *
-    */
-
-    /**
-    *
-    * @see http://www.jquery.com/
     * @name fn
     * @class
     * @memberOf $
-    *
-    */
-
-    /**
     *
     * simpleSlides plugin
     * @class
@@ -236,7 +227,7 @@
         
         //this is causing problems because buttons cant be created on slideshows 
         //not set to autoPlay. Split into two conditionals
-        methods.startSlideshow = (settings.autoPlay && settings.generateButtons) ? methods.startSlideShow(methods.images, methods.images[0], settings.slideShowSpeed, methods.generateButtons) : methods.startSlideShow(methods.images, methods.images[0], settings.slideShowSpeed);
+        if (settings.autoPlay ) {methods.startSlideshow(methods.images, methods.images[0], settings.slideShowSpeed);}
         
         if (settings.stop) {methods.stopSlideshow(settings.slideShowSpeed); }
         
