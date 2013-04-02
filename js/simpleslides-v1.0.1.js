@@ -14,12 +14,12 @@
 
     "use strict";
 
-    /** @namespace */
+    /** @namespace methods */
     var methods = {
         /**
-        *
+        * @function methods.init
         * @param {object} obj
-        * @return {undefined}
+        * 
         *
         */
 
@@ -37,12 +37,13 @@
         * Accepts an array of images, which image to begin the slideshow with, 
         * what interval the autorate transitions should take place at, and creates 
         * navigation buttons for the slideshow as needed
-        *
+        * @public
+        * @function methods.startSlideShow
         * @param {array} images
         * @param {string} current
         * @param {number} slideShowSpeed
         * @param {boolean} generateButtons
-        * @return {undefined}
+        * 
         *
         */
 
@@ -87,8 +88,10 @@
         * 
         * Stops the slide transitions on mouseenter, resumes in the same 
         * gallery picture location on mouseleave
+        * @public
+        * @function methods.stopSlideshow
         * @param {number} slideShowSpeed
-        * @return {undefined}
+        * 
         *
         */
 
@@ -104,8 +107,8 @@
         *
         * Creates buttons to navigate the slideshow if 
         * specified
-        * @param {undefined}
-        * @return {undefined}
+        * @public
+        * @function methods.generateButtons()
         *
         */
 
@@ -125,8 +128,8 @@
         /**
         *
         * Swaps out the buttons being selected/unselected based on click events
-        * @param {undefined}
-        * @return {undefined}
+        * @public
+        * @function methods.slideLinks()
         *
         */
 
@@ -157,7 +160,8 @@
 
         },
 
-        /** Experimental method 
+        /** 
+        * Experimental method 
         * for minimizing the nav menu.
         * Not fully tested.
         */
@@ -224,6 +228,9 @@
         methods.startSlideshow = (settings.autoPlay && settings.generateButtons) ? methods.startSlideShow(methods.images, methods.images[0], settings.slideShowSpeed, methods.generateButtons) : methods.startSlideShow(methods.images, methods.images[0], settings.slideShowSpeed);
         if (settings.stop) {methods.stopSlideshow(settings.slideShowSpeed); }
         if (settings.slideLinks) {methods.slideLinks(); }
+
+        /** Experimental for menu slide down animation */
+        if (settings.minimizeButtons) {methods.minLinkMenu(); }
     };
     $("#simpleslides").simpleSlides();
 }(jQuery));
